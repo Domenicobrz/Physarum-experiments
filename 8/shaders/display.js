@@ -32,7 +32,7 @@ void main() {
     vec3 mapped = vec3(1.0) - exp(-val * exposure);
     // vec3 mapped = aces(val);
 
-    vec3 fluidVel = vec3(texture2D(uFluidVelocity, vUv).rg * 0.05 + 3.0, 3.0);
+    vec3 fluidVel = vec3(texture2D(uFluidVelocity, vUv).rg * 0.02 + 3.0, 3.0);
     vec3 fluidMapped = vec3(1.0) - exp(-fluidVel * exposure);
 
 
