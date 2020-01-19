@@ -17,6 +17,7 @@ function init() {
     });
     renderer.setPixelRatio( window.devicePixelRatio );
     renderer.setSize( innerWidth, innerHeight );
+    renderer.setPixelRatio( window.devicePixelRatio );
     renderer.autoClear = false;
 
     document.body.appendChild(renderer.domElement);

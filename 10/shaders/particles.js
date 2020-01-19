@@ -67,13 +67,18 @@ vec2 clampSensorPosition(vec2 sensor) {
 
 void main() {
 
-    float senseLength = 4.2 + sin(vParticleIndex.x * 0.757) * 2.35;
-    float senseAngle  = 0.785398 * 0.5;//  + sin(vParticleIndex.x) * 0.1;  // radians
+    float senseLength = 8.2 + sin(vParticleIndex.x * 0.757) * 2.35;
+    float senseAngle  = 0.785398 * 0.15;  // radians
+
+    if(mod(vParticleIndex.x, 2.0) > 0.5) {
+        senseAngle = sin(uTime * 0.17) * 10.0;
+        senseLength += cos(uTime * 0.17) * 20.0;
+    }
 
 
 
     vec2 cDir = normalize(  vDirection  );
-    vec2 lDir = normalize(  rotate(cDir, +senseAngle)  );
+    vec2 lDir = normalize(  rotate(cDir, +senseAngle) * 3.5  );
     vec2 rDir = normalize(  rotate(cDir, -senseAngle)  );
 
     vec2 centralSensorPosition = clampSensorPosition(vPosition + cDir * senseLength);
@@ -120,7 +125,10 @@ void main() {
 
 
     // ******** fluid motion displacement
-    newDir += texture2D(uFluidVelocity, vPosition.xy * invScreenSize).xy * 0.01;
+    // newDir *= sin(0.5 + vParticleIndex.x) * 0.20 + texture2D(uFluidVelocity, vPosition.xy * invScreenSize).xy * 0.01;
+    // newDir += 0.75 * texture2D(uFluidVelocity, vPosition.xy * invScreenSize).xy * 0.01;
+    newDir = rotate(newDir, sin(uTime + vParticleIndex.x) * 0.0);
+    newDir += 0.25 * texture2D(uFluidVelocity, vPosition.xy * invScreenSize).xy * 0.01;
     // ******** fluid motion displacement - END
 
 
