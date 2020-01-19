@@ -490,8 +490,17 @@ function multipleSplats (amount) {
 
 function initMouseCommands() {
     window.addEventListener('mousedown', e => {
-        let posX = scaleByPixelRatio(e.offsetX);
-        let posY = scaleByPixelRatio(e.offsetY);
+        let posX = scaleByPixelRatio(e.clientX);
+        let posY = scaleByPixelRatio(e.clientY);
+        let pointer = pointers.find(p => p.id == -1);
+        if (pointer == null)
+            pointer = new pointerPrototype();
+        updatePointerDownData(pointer, -1, posX, posY, e.which == 3, e.which == 2);
+    });
+
+    window.addEventListener('touchstart', e => {
+        let posX = scaleByPixelRatio(e.touches[0].clientX);
+        let posY = scaleByPixelRatio(e.touches[0].clientY);
         let pointer = pointers.find(p => p.id == -1);
         if (pointer == null)
             pointer = new pointerPrototype();
@@ -501,8 +510,16 @@ function initMouseCommands() {
     window.addEventListener('mousemove', e => {
         let pointer = pointers[0];
         if (!pointer.down) return;
-        let posX = scaleByPixelRatio(e.offsetX);
-        let posY = scaleByPixelRatio(e.offsetY);
+        let posX = scaleByPixelRatio(e.clientX);
+        let posY = scaleByPixelRatio(e.clientY);
+        updatePointerMoveData(pointer, posX, posY);
+    });
+
+    window.addEventListener('touchmove', e => {
+        let pointer = pointers[0];
+        if (!pointer.down) return;
+        let posX = scaleByPixelRatio(e.touches[0].clientX);
+        let posY = scaleByPixelRatio(e.touches[0].clientY);
         updatePointerMoveData(pointer, posX, posY);
     });
     
