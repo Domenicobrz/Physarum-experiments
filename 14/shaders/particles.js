@@ -70,8 +70,6 @@ void main() {
     float senseLength = 3.2 + sin(vParticleIndex.x * 0.757) * 2.35;
     float senseAngle  = 0.785398 * 0.65;  // radians
 
-    // MODIFICA IL SENSE ANGLE E VEDI COS'E' PIU' BELLO!
-
 
 
     // if(mod(vParticleIndex.x, 2.0) > 0.5) {
